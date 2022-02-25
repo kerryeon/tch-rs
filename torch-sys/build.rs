@@ -21,6 +21,11 @@ fn download<P: AsRef<Path>>(source_url: &str, target_file: P) -> anyhow::Result<
     let f = fs::File::create(&target_file)?;
     let mut writer = io::BufWriter::new(f);
     let mut easy = Easy::new();
+    easy.ssl_verify_peer(if cfg!(feature = "download-libtorch-ssl-verify-peer") {
+        true
+    } else {
+        false
+    })?;
     easy.url(source_url)?;
     easy.write_function(move |data| Ok(writer.write(data).unwrap()))?;
     easy.perform()?;
