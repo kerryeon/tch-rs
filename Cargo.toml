@@ -30,13 +30,19 @@ anyhow = "1"
 members = ["torch-sys"]
 
 [features]
-default = ["torch-sys/download-libtorch"]
+default = ["download-libtorch-with-native-tls"]
+download-libtorch-with-native-tls = [
+    "torch-sys/download-libtorch-with-native-tls",
+]
+download-libtorch-with-rustls-tls = [
+    "torch-sys/download-libtorch-with-rustls-tls",
+]
 python = ["cpython"]
 doc-only = ["torch-sys/doc-only"]
 cuda-tests = []
 
 [package.metadata.docs.rs]
-features = [ "doc-only" ]
+features = ["doc-only"]
 
 [[example]]
 name = "reinforcement-learning"
